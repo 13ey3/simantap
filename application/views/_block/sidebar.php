@@ -19,7 +19,7 @@
     
     <!-- Nav Item - Dashboard -->
     <li class="nav-item">
-    <a class="nav-link" href="<?= site_url('main')?>">
+    <a class="nav-link" href="<?= site_url('/')?>">
         <i class="fas fa-fw fa-tachometer-alt"></i>
         <span>Dashboard</span></a>
     </li>

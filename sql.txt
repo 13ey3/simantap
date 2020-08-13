@@ -1,0 +1,9 @@
+CREATE TABLE s_users(
+	s_userid int(5) AUTO_INCREMENT PRIMARY KEY NOT NULL,
+	s_username varchar(100) NOT NULL,
+	s_password varchar(200) NOT NULL,
+	s_jenis_user int(4),
+	s_userid_detile int(5),
+	s_active boolean NOT NULL DEFAULT 0,
+	s_created_at DATE
+); 

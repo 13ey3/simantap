@@ -1,15 +1,24 @@
 <?php
-defined('BASEPATH') or exit('No direct script access allowed');
+defined('BASEPATH') || exit('No direct script access allowed');
 
 class Perijinan_m extends CI_Model {
   
   public $table = 'perijinan';
   public $table2 = 'jenis_perijinan';
 
-  public function getAllPerijinan($rows, $pages, $cari) {
+  public function getAllPerijinan($rows, $pages, $cari, $jenis_ijin, $jenis_permohonan) {
     if ($cari != null || $cari != "") {
-
       $where = "id_register LIKE '%". $cari ."%' OR nama_pemohon LIKE '%". $cari ."%' OR tipe_permohonan LIKE '%". $cari ."%' OR deskripsi LIKE '%". $cari ."%'";
+      $this->db->where($where);
+    }
+
+    if ($jenis_ijin != null || $jenis_ijin != "") {
+      $where = "a.id_jenis_ijin = $jenis_ijin";
+      $this->db->where($where);
+    }
+    
+    if ($jenis_permohonan != null || $jenis_permohonan != "") {
+      $where = "a.tipe_permohonan = '$jenis_permohonan'";
       $this->db->where($where);
     }
 
@@ -17,13 +26,25 @@ class Perijinan_m extends CI_Model {
     $this->db->from('perijinan a');
     $this->db->join('jenis_perijinan b', 'b.id_jenis_ijin = a.id_jenis_ijin', 'left');
     $this->db->limit($rows, $pages);  
-    return $q = $this->db->get()->result_array();
+    $this->db->order_by('id_register', 'DESC');
+    $q = $this->db->get();
+    return $q->result_array();
   }
 
-  public function countAllData($cari = null) {
+  public function countAllData($cari, $jenis_ijin, $jenis_permohonan) {
     if ($cari != null || $cari != "") {
 
       $where = "id_register LIKE '%". $cari ."%' OR nama_pemohon LIKE '%". $cari ."%' OR tipe_permohonan LIKE '%". $cari ."%' OR deskripsi LIKE '%". $cari ."%'";
+      $this->db->where($where);
+    }
+
+    if ($jenis_ijin != null || $jenis_ijin != "") {
+      $where = "a.id_jenis_ijin = $jenis_ijin";
+      $this->db->where($where);
+    }
+    
+    if ($jenis_permohonan != null || $jenis_permohonan != "") {
+      $where = "a.tipe_permohonan = '$jenis_permohonan'";
       $this->db->where($where);
     }
 

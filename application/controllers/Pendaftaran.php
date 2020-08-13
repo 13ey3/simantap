@@ -17,7 +17,7 @@ class Pendaftaran extends CI_Controller {
 			"content" => "pendaftaran/index",
 			"custom_js" => "pendaftaran/custom_js",
       "layout" => 1
-		];
+    ];
 		
 		$this->load->view('main', $view_data);
   }
@@ -25,15 +25,18 @@ class Pendaftaran extends CI_Controller {
   public function ajax_grid($page = 0)
   {
     $post = $this->input->post();
+    
     $cari = $post['cari'];
+    $jenisIjin = $post['jenisIjin'];
+    $jenisPermohonan = $post['jenisPermohonan'];
     $limit = $post['row'];
-    // posisi page
-    if($page != 0){
+    
+    if($page != 0){ // posisi page
       $page = ($page-1) * $limit;
     }
 
-    $count = $this->perijinan_m->countAllData($cari); // total data
-    $result = $this->perijinan_m->getAllPerijinan($limit, $page, $cari); // data result
+    $count = $this->perijinan_m->countAllData($cari, $jenisIjin, $jenisPermohonan); // total data
+    $result = $this->perijinan_m->getAllPerijinan($limit, $page, $cari, $jenisIjin, $jenisPermohonan); // data result
 
     // Pagination Configuration
     $config['base_url'] = base_url().'pendaftaran/ajax_grid';
