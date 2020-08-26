@@ -79,6 +79,20 @@ class Register extends CI_Controller
 		$this->load->view('main', $view_data);
 	}
 
+	public function aktivasi()
+	{
+		$nip = $this->input->get('nip');
+		
+		$view_data = [
+			"page_title" => "Aktivasi Akun",
+			"content" => "auth/aktivasi_success",
+			"custom_js" => "",
+			"layout" => 2
+		];
+
+		$this->load->view('main', $view_data);
+	}
+
 	public function refresh_capcay()
 	{
 		$cap = $this->generate_captcha();
@@ -143,7 +157,7 @@ class Register extends CI_Controller
 
 	public function cek_email($input)
 	{
-		$email_cek = $this->user_m->findEmailPemohon($input)->row();
+		$email_cek = $this->pemohon_m->findEmailPemohon($input)->row();
 
 		if ($email_cek == null) {
 			return TRUE;
@@ -155,7 +169,7 @@ class Register extends CI_Controller
 
 	public function cek_nik($input)
 	{
-		$nik_cek = $this->user_m->findNikPemohon($input)->row();
+		$nik_cek = $this->pemohon_m->findNikPemohon($input)->row();
 
 		if ($nik_cek == null) {
 			return TRUE;
@@ -188,24 +202,25 @@ class Register extends CI_Controller
 			'mailtype'  => 'html',
 			'charset'   => 'utf-8',
 			'protocol'  => 'smtp',
-			'smtp_host' => 'smtp.gmail.com',
+			'smtp_host' => 'smtp.googlemail.com',
 			'smtp_user' => 'simantap.ambon.go.id@gmail.com',
 			'smtp_pass'   => 'simantap@12345',
 			'smtp_crypto' => 'ssl',
-			'smtp_port'   => 587,
+			'smtp_port'   => 465,
 			'crlf'    => "\r\n",
 			'newline' => "\r\n"
 		];
 
 		$this->load->library('email', $config);
-		$this->email->from('simantap.ambon.go.id@gmail.com', 'simantap'); // Email dan nama pengirim
-		$this->email->to($data['email']); // Ganti dengan email tujuan
+		$this->email->from('no-reply@simantap.ambon.go.id', 'SIMANTAP'); 
+		$this->email->to($data['email']);
 		$this->email->subject('[Simantap Online Kota Ambon - no-replay] Verifikasi pendaftaran');
-		$this->email->message("Nomor Induk Perizinan anda adalah : ". $data['nip'] ."<br>di gunakan untuk login di simantap online<br><br> Klik <strong><a href='<?= base_url() ?>' target='_blank' rel='noopener'>disini</a></strong> untuk melengkapi pendaftaran anda.");
+		$this->email->message("Nomor Induk Perizinan anda adalah : ". $data['nip'] ."<br> ini di gunakan sebagai username untuk login di simantap online<br><br> Klik <strong><a href='". base_url()."register/aktivasi?nip=". $data['nip'] ."' target='_blank' rel='noopener'>disini</a></strong> untuk aktivasi akun anda.");
 
 		if ($this->email->send()) {
 			echo 'Sukses! email berhasil dikirim.';
 		} else {
+			echo $this->email->print_debugger(); 
 			echo 'Error! email tidak dapat dikirim.';
 		}
 	}

@@ -1,78 +1,54 @@
 <div class="container-fluid">
   <!-- Welcome message -->
 
-  <!-- DataTales Example -->
-  <div class="card shadow mb-4">
-    <div class="card-header py-2">
-      <div class="row">
-        <div class="col-sm-6">
-          <h6 class="m-0 font-weight-bold text-primary">Data <?= $page_title ?></h6>
-        </div>
-        <div class="col-sm-6">
-          <a href="#" class="btn btn-sm btn-primary float-right">Tambah</a>
-        </div>
-      </div>
+  <ul class="nav nav-pills mb-3" role="tablist" id="nav-pendaftaran">
+    <li class="nav-item" role="presentation"><a href="#data-pemohon" data-toggle="pill" class="nav-link active" id="tab-pemohon" role="tab" aria-controls="pills-home" aria-selected="true">Pemohon</a></li>
+    <li class="nav-item" role="presentation"><a href="#data-permohonan" data-toggle="pill" class="nav-link" id="tab-permohonan" role="tab" role="tab" aria-controls="pills-home" aria-selected="false">Permohonan</a></li>
+    <li class="nav-item" role="presentation"><a href="#data-lama" data-toggle="pill" class="nav-link" id="tab-data-lama" role="tab" role="tab" aria-controls="pills-home" aria-selected="false">Permohonan Lama</a></li>
+  </ul>
+
+  <div class="tab-content" id="tabContent">
+    <div class="tab-pane fade active show" id="data-pemohon" role="tabpanel">
+
+      <?php $this->load->view('pendaftaran/pemohon'); ?>
     </div>
-    <div class="card-body">
-      <div class="row mb-1">
-        <div class="col-sm-6 form-inline">
-          <label for="rows">Tampil: </label>
-          <select id="rows" class="form-control form-control-sm ml-1" onchange="calldatagrid(1)">
-            <option value="10">10</option>
-            <option value="25">25</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
-          </select>
+
+    <div class="tab-pane fade" id="data-permohonan" role="tabpanel">
+
+      <?php $this->load->view('pendaftaran/permohonan'); ?>
+    </div>
+
+    <div class="tab-pane fade" id="data-lama" role="tabpanel">
+
+      <?php $this->load->view('pendaftaran/data_permohonan_lama'); ?>
+    </div>
+  </div>
+
+</div>
+
+<div class="modal fade" id="jeniIjinModal" tabindex="-1" role="dialog" aria-labelledby="jenisIjinModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="jenisIjinModal">Pilih Jenis Ijin</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <form action="pendaftaran/tambah" method="POST">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="">Pilih Jenis Ijin</label>
+            <select id="comboJenisIjinModal" class="form-control form-control-sm">
+            </select>
+          </div>
+
         </div>
-
-        <div class="col-sm-3 ml-auto">
-          <input type="text" placeholder="Cari " class="form-control form-control-sm float-right" name="kolomcari" id="kolomCari" onkeyup="calldatagrid()">
+        <div class="modal-footer">
+          <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary btn-sm">Lanjut</button>
         </div>
-      </div>
-
-      <div class="table-responsive">
-        <table class="table table-hover table-sm">
-          <thead>
-            <tr class="bg-info text-white">
-              <th>ID Register</th>
-              <th>Jenis Permohonan</th>
-              <th>Pemohon</th>
-              <th style="width: 300px;">Jenis Ijin</th>
-              <th class="text-center">#</th>
-            </tr>
-          </thead>
-          <tbody id="data_grid" class="text-md">
-            <tr>
-              <td colspan="5" class="text-center">Tidak ada data!</td>
-            </tr>
-          </tbody>
-          <tfoot>
-            <tr class="bg-info">
-              <td></td>
-              <td id="jenis_permohonan">
-                <select id="comboJenisPermohonan" class="form-control form-control-sm" onchange="calldatagrid()">
-                  <option value="">Pilih</option>
-                  <option value="Baru">Baru</option>
-                  <option value="Perpanjangan">Perpanjangan</option>
-                  <option value="Perubahan">Perubahan</option>
-                </select>
-              </td>
-              <td></td>
-              <td id="jeni_ijin">
-                <select id="comboJenisIjin" class="form-control form-control-sm" onchange="calldatagrid()">
-                </select>
-              </td>
-              <td></td>
-            </tr>
-          </tfoot>
-        </table>
-
-        <!-- Paginate -->
-      </div>
-      <div class="row">
-        <div class="col-sm-6" id="total_data"></div>
-        <div class="col-sm-6" id='pagination'></div>
-      </div>
+      </form>
     </div>
   </div>
 </div>

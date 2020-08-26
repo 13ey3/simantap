@@ -1,7 +1,48 @@
 <?php
 defined('BASEPATH') || exit('No direct script access allowed');
 
-class Pemohon_m extends CI_Model {
+class Pemohon_m extends CI_Model
+{
+    public function getAllPemohon($rows, $pages, $cari, $jenis_usaha)
+    {
+        if ($cari != null || $cari != "") {
+            $where = "c_nip LIKE '%" . $cari . "%' OR c_nama_pemohon LIKE '%" . $cari . "%' OR deskripsi LIKE '%" . $cari . "%'";
+            $this->db->where($where);
+        }
+
+        if ($jenis_usaha != null || $jenis_usaha != "") {
+            $where = "a.c_id_usaha = $jenis_usaha";
+            $this->db->where($where);
+        }
+
+        $this->db->select('*');
+        $this->db->from('t_pemohon a');
+        $this->db->join('jenis_usaha b', 'b.id_usaha = a.c_id_usaha', 'left');
+        $this->db->limit($rows, $pages);
+        $this->db->order_by('c_nip', 'ASC');
+        $q = $this->db->get();
+        return $q->result_array();
+    }
+
+    public function countAllPemohon($cari, $jenis_usaha)
+    {
+        if ($cari != null || $cari != "") {
+            $where = "c_nip LIKE '%" . $cari . "%' OR c_nama_pemohon LIKE '%" . $cari . "%' OR deskripsi LIKE '%" . $cari . "%'";
+            $this->db->where($where);
+        }
+
+        if ($jenis_usaha != null || $jenis_usaha != "") {
+            $where = "a.c_id_usaha = $jenis_usaha";
+            $this->db->where($where);
+        }
+
+        $this->db->select('count(c_id_pemohon) as allcount');
+        $this->db->from('t_pemohon a');
+        $this->db->join('jenis_usaha b', 'b.id_usaha = a.c_id_usaha', 'left');
+        $q = $this->db->get()->result_array();
+        
+        return $q[0]['allcount'];
+    }
 
     public function addOrUpdate($post, $nip = null)
     {
@@ -32,6 +73,16 @@ class Pemohon_m extends CI_Model {
         } else {
             $this->db->update('t_pemohon', array('c_nip' => $nip));
         }
+    }
+
+    public function findEmailPemohon($email)
+    {
+        return $this->db->get_where('t_pemohon', array('c_email' => $email));
+    }
+
+    public function findNikPemohon($nik)
+    {
+        return $this->db->get_where('t_pemohon', array('c_no_identitas' => $nik));
     }
 
     public function getMaxId()
