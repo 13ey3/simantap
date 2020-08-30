@@ -40,7 +40,7 @@ class Pemohon_m extends CI_Model
         $this->db->from('t_pemohon a');
         $this->db->join('jenis_usaha b', 'b.id_usaha = a.c_id_usaha', 'left');
         $q = $this->db->get()->result_array();
-        
+
         return $q[0]['allcount'];
     }
 
@@ -52,13 +52,13 @@ class Pemohon_m extends CI_Model
             'c_nama_pemohon' => (isset($post['nama_pemohon'])) ? $post['nama_pemohon'] : null,
             'c_nama_badan_usaha' => (isset($post['nama_badan_usaha'])) ? $post['nama_badan_usaha'] : null,
             'c_nama_penanggung_jawab' => (isset($post['nama_penanggung_jawab'])) ? $post['nama_penanggung_jawab'] : null,
-            'c_jbt_penanggung_jawab' => (isset($post['c_jbt_penanggung_jawab'])) ? $post['c_jbt_penanggung_jawab'] : null,
-            'c_id_usaha' => (isset($post['id_usaha'])) ? $post['id_usaha'] : null,
-            'c_alamat_usaha' => (isset($post['alamat_usaha'])) ? $post['alamat_usaha'] : null,
-            'c_id_kelurahan' => (isset($post['id_kelurahan'])) ? $post['id_kelurahan'] : null,
-            'c_id_kecamatan' => (isset($post['id_kecamatan'])) ? $post['id_kecamatan'] : null,
-            'c_id_kota' => (isset($post['id_kota'])) ? $post['id_kota'] : null,
-            'c_telpon' => (isset($post['no_telp'])) ? $post['no_telp'] : null,
+            'c_jbt_penanggung_jawab' => (isset($post['jbt_penanggung_jawab'])) ? $post['jbt_penanggung_jawab'] : null,
+            'c_id_usaha' => (isset($post['jenis_usaha'])) ? $post['jenis_usaha'] : null,
+            'c_alamat_pemohon' => (isset($post['alamat_pamohon'])) ? $post['alamat_pamohon'] : null,
+            'c_id_kelurahan_pemohon' => (isset($post['id_kelurahan_pemohon'])) ? $post['id_kelurahan_pemohon'] : null,
+            'c_id_kecamatan_pemohon' => (isset($post['id_kecamatan_pemohon'])) ? $post['id_kecamatan_pemohon'] : null,
+            'c_kota' => (isset($post['kota_pemohon'])) ? $post['kota_pemohon'] : null,
+            'c_telpon' => (isset($post['telpon'])) ? $post['telpon'] : null,
             'c_email' => (isset($post['email'])) ? $post['email'] : null,
             'c_no_identitas' => (isset($post['nik'])) ? $post['nik'] : null,
             'c_id_jenis_identitas' => (isset($post['id_jenis_identitas'])) ? $post['id_jenis_identitas'] : null,
@@ -71,7 +71,7 @@ class Pemohon_m extends CI_Model
         if ($nip == null) {
             $this->db->insert('t_pemohon', $data);
         } else {
-            $this->db->update('t_pemohon', array('c_nip' => $nip));
+            $this->db->update('t_pemohon', $data, array('c_nip' => $nip));
         }
     }
 

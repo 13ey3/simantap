@@ -18,6 +18,7 @@ class Pendaftaran extends CI_Controller
       "page_title" => "Pendaftaran",
       "content" => "pendaftaran/index",
       "custom_js" => "pendaftaran/custom_js",
+      "parent_menu" => 'pendaftaran',
       "layout" => 1
     ];
 
@@ -46,7 +47,7 @@ class Pendaftaran extends CI_Controller
     ];
 
     $tr = "";
-    foreach ($result as $key => $val) {
+    foreach ($result as $val) {
       $tombol = "<a href=" . $val['c_nip'] . ">Edit</a> | <a href=" . $val['c_nip'] . ">Detile</a> | <a href=" . $val['c_nip'] . ">Delete</a>";
       $tr .= "<tr>";
       $tr .= "<td>" . $val['c_nip'] . "</td>";
@@ -55,12 +56,12 @@ class Pendaftaran extends CI_Controller
       $tr .= "<td><center>" . $tombol . "</center></td>";
       $tr .= "</tr>";
     }
-    // Initialize $data Array
+
     $data['pagination'] = paging($paging_data);
     $data['body_table'] = $tr;
     $data['page'] = $page;
     $data['rows'] = $post['row'];
-    $data['info'] = "Tampil " . ($this->pagination->cur_page * $this->pagination->per_page) . " data dari " . $count . " total data";
+    $data['info'] = "Tampil " . count($result) . " data dari " . $count . " total data";
 
     echo json_encode($data);
   }
@@ -88,7 +89,7 @@ class Pendaftaran extends CI_Controller
     ];
 
     $tr = "";
-    foreach ($result as $key => $val) {
+    foreach ($result as $val) {
       $tombol = "<a href=" . $val['id_register'] . ">Edit</a> | <a href=" . $val['id_register'] . ">Detile</a> | <a href=" . $val['id_register'] . ">Delete</a>";
       $tr .= "<tr>";
       $tr .= "<td>" . $val['id_register'] . "</td>";
@@ -98,12 +99,12 @@ class Pendaftaran extends CI_Controller
       $tr .= "<td><center>" . $tombol . "</center></td>";
       $tr .= "</tr>";
     }
-    // Initialize $data Array
+
     $data['pagination'] = paging($paging_data);
     $data['body_table'] = $tr;
     $data['page'] = $page;
     $data['rows'] = $post['row'];
-    $data['info'] = "Tampil " . ($this->pagination->cur_page * $this->pagination->per_page) . " data dari " . $count . " total data";
+    $data['info'] = "Tampil " . count($result) . " data dari " . $count . " total data";
 
     echo json_encode($data);
   }

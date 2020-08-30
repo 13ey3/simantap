@@ -1,7 +1,8 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Login extends CI_Controller {
+class Login extends CI_Controller
+{
 
   public function __construct()
   {
@@ -9,8 +10,8 @@ class Login extends CI_Controller {
     $this->load->model('user_m');
   }
 
-	public function index()
-	{
+  public function index()
+  {
     $view_data = [
       "page_title" => "Log-in",
       "content" => "auth/login",
@@ -18,26 +19,37 @@ class Login extends CI_Controller {
       "layout" => 2
     ];
 
-		$this->load->view('portal', $view_data);
+    $this->load->view('portal', $view_data);
   }
-  
+
   public function auth()
   {
     $username = $this->input->post('username');
     $password = $this->input->post('password');
-    
-    $user = $this->user_m->getUser($username)->row_array();
+    $user_type = $this->input->post('user_type');
 
-    if ($user) {
-      if (password_verify($password, $user['s_password'])) {
-        $pass = password_get_info($user['s_password']);
-        var_dump($pass);
-        echo "password cocok";
+    if ($user_type == null) {
+      $user = $this->user_m->getUser($username)->row_array();
+
+      if ($user) {
+        if (password_verify($password, $user['s_password'])) {
+
+          $name = ($user['c_id_usaha'] == 3) ? $user['c_nama_pemohon'] : $user['c_nama_badan_usaha'];
+          $user_data = [
+            'userid' => $username,
+            'name' => $name,
+            'usertype' => $user['s_jenis_user']
+          ];
+          
+          $this->session->set_userdata($user_data);
+          redirect('main');
+        } else {
+
+          echo "username atau password salah";
+        }
       } else {
-        echo "password salah";
+        echo "username gak ketemu";
       }
-    } else {
-      echo "username gak ketemu";
     }
   }
 }

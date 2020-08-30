@@ -16,7 +16,7 @@
           </div>
           <div class="row">
             <div class="col-md-12 text-center">
-              <p style="padding: 30px 30px 10px 30px;">Selamat! akun anda sudah aktif silahkan <a href="<?= base_url() ?>login"></a> dan lengkapi pendaftaran anda.</p>
+              <p style="padding: 30px 30px 10px 30px;">Selamat! akun anda sudah aktif. silahkan <a href="<?= base_url() ?>login">login</a> dan lengkapi data anda.</p>
             </div>
           </div>
         </form>

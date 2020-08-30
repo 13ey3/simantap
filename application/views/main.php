@@ -3,64 +3,70 @@
 
 <head>
   <?php $this->load->view('_block/header'); ?>
+
+  <script>
+    const base_url = '<?= base_url() ?>';
+  </script>
 </head>
 <?php
-  if ($layout == 1) {
+if ($layout == 1) {
 ?>
-<body id="page-top">
 
-  <!-- Page Wrapper -->
-  <div id="wrapper">
+  <body id="page-top">
 
-    <!-- Sidebar -->
-    <?php $this->load->view('_block/sidebar'); ?>
-    <!-- End of Sidebar -->
+    <!-- Page Wrapper -->
+    <div id="wrapper">
 
-    <!-- Content Wrapper -->
-    <div id="content-wrapper" class="d-flex flex-column">
+      <!-- Sidebar -->
+      <?php $this->load->view('_block/sidebar'); ?>
+      <!-- End of Sidebar -->
 
-      <!-- Main Content -->
-      <div id="content">
-        <!-- Topbar -->
-        <?php $this->load->view('_block/topbar'); ?>
-        <!-- End of Topbar -->
-        <!-- Begin Page Content -->
-        <?php $this->load->view($content)?>
-        <!-- /.container-fluid -->
+      <!-- Content Wrapper -->
+      <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+          <!-- Topbar -->
+          <?php $this->load->view('_block/topbar'); ?>
+          <!-- End of Topbar -->
+          <!-- Begin Page Content -->
+          <?php $this->load->view($content) ?>
+          <!-- /.container-fluid -->
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <?php $this->load->view('_block/footer'); ?>
+        <!-- End of Footer -->
+
       </div>
-      <!-- End of Main Content -->
-
-      <!-- Footer -->
-      <?php $this->load->view('_block/footer'); ?>
-      <!-- End of Footer -->
+      <!-- End of Content Wrapper -->
 
     </div>
-    <!-- End of Content Wrapper -->
+    <!-- End of Page Wrapper -->
 
-  </div>
-  <!-- End of Page Wrapper -->
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+    </a>
 
-  <!-- Scroll to Top Button-->
-  <a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-  </a>
+  <?php
+  //  Logout Modal
+  $this->load->view('_block/logout_modal');
+} elseif ($layout == 2) {
+  ?>
 
-<?php 
-    //  Logout Modal
-    $this->load->view('_block/logout_modal');
-  } elseif ($layout == 2) {
-?>
-<body class="bg-login">
-    <div class="container">
-      <?php $this->load->view($content); ?>
-    </div>
-<?php 
+    <body class="bg-login">
+      <div class="container">
+        <?php $this->load->view($content); ?>
+      </div>
+    <?php
   }
   // js Librarry
   $this->load->view('_block/js_lib');
-  !empty($custom_js) ? $this->load->view($custom_js) : '' ;
-?>
+  !empty($custom_js) ? $this->load->view($custom_js) : '';
+    ?>
 
-</body>
+    </body>
 
 </html>

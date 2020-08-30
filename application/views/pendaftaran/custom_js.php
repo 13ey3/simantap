@@ -10,7 +10,7 @@
         }, 200)
     });
 
-    const base_url = '<?= base_url() ?>';
+    // const base_url = '<?= base_url() ?>';
 
     $('#data-lama #pagination').on('click', 'a', function(e) {
         e.preventDefault();

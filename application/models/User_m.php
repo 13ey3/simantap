@@ -29,4 +29,14 @@ class User_m extends CI_Model
         $this->db->where('s_username', $username);
         return $this->db->get();
     }
+
+
+    public function activateUser($nip)
+    {
+        $data = array(
+            's_active' => 1
+        );
+
+        $this->db->update('s_users', $data, array('s_username' => $nip));
+    }
 }

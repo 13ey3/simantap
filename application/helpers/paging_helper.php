@@ -11,7 +11,7 @@ function paging($data)
     $config['total_rows'] = $data['count'];
     $config['per_page'] = $data['limit'];
     // page style
-    $config['full_tag_open']    = '<div class="pagging"><ul class="pagination justify-content-end">';
+    $config['full_tag_open']    = '<div class="pagging"><ul class="pagination pagination-sm justify-content-end">';
     $config['full_tag_close']   = '</ul></div>';
     $config['num_tag_open']     = '<li class="page-item"><span class="page-link">';
     $config['num_tag_close']    = '</span></li>';
