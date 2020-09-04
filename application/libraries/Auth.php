@@ -8,14 +8,14 @@ class Auth
     function __construct()
     {
         $this->ci = &get_instance();
+        $this->ci->load->model('pemohon_m');
     }
 
     // untuk cek login
     function check_login()
     {
-        $this->ci->load->model('auth_model');
         $user_id = $this->ci->session->userdata('userid');
-        $user_data = $this->ci->auth_model->get($user_id)->row();
+        $user_data = $this->ci->pemohon_m->cekRegsitration($user_id);
         return $user_data;
     }
 
@@ -25,6 +25,16 @@ class Auth
         $user_session = $this->ci->session->userdata('userid');
         if (!$user_session) {
             redirect('login');
+        }
+    }
+
+    function is_full_register()
+    {
+        $nip = $this->ci->session->userdata('userid');
+        $user_data = $this->ci->pemohon_m->cekRegsitration($nip);
+
+        if ($user_data['c_complete_reg'] == 0) {
+            redirect('user/profile');
         }
     }
 }

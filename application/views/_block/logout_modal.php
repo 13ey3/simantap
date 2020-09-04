@@ -10,7 +10,7 @@
         <div class="modal-body">Pilih <span>Logout</span> untuk keluar</div>
         <div class="modal-footer">
           <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary btn-sm" href="<?= site_url('login')?>">Logout</a>
+          <a class="btn btn-primary btn-sm" href="<?= site_url('login/logout')?>">Logout</a>
         </div>
       </div>
     </div>

@@ -4,13 +4,13 @@
         jenisIjin();
     });
 
+    let csrfHash = '<?= $this->security->get_csrf_hash(); ?>';
+
     $('#nav-pendaftaran').click(() => {
         setTimeout(() => {
             calldatagrid(0);
         }, 200)
     });
-
-    // const base_url = '<?= base_url() ?>';
 
     $('#data-lama #pagination').on('click', 'a', function(e) {
         e.preventDefault();
@@ -92,7 +92,8 @@
             cari: data.cari,
             jenisIjin: data.jenisIjin,
             jenis_usaha: data.jenisUsaha,
-            jenisPermohonan: data.jenisPermohonan
+            jenisPermohonan: data.jenisPermohonan,
+            <?= $this->security->get_csrf_token_name(); ?>: csrfHash
         }, (res) => {
             // console.log(data);
             var aa = JSON.parse(res)

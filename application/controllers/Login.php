@@ -40,7 +40,7 @@ class Login extends CI_Controller
             'name' => $name,
             'usertype' => $user['s_jenis_user']
           ];
-          
+
           $this->session->set_userdata($user_data);
           redirect('main');
         } else {
@@ -51,5 +51,13 @@ class Login extends CI_Controller
         echo "username gak ketemu";
       }
     }
+  }
+
+  public function logout()
+  {
+    $param_userdata = array('userid', 'name', 'usertype');
+    $this->session->unset_userdata($param_userdata);
+
+    redirect('login');
   }
 }

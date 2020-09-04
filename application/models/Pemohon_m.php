@@ -46,6 +46,14 @@ class Pemohon_m extends CI_Model
 
     public function addOrUpdate($post, $nip = null)
     {
+        $a = $this->cekRegsitration($nip);
+
+        if ($a['c_id_kelurahan_pemohon'] != null && $a['c_id_kecamatan_pemohon'] != NULL && $a['c_alamat_pemohon'] != NULL) {
+            $complete_reg = 1;
+        } else {
+            $complete_reg = 0;
+        }
+
         $data = [
             'c_id_pemohon' => (isset($post['id_pemohon'])) ? $post['id_pemohon'] : null,
             'c_nip' => (isset($post['nip'])) ? $post['nip'] : null,
@@ -65,7 +73,8 @@ class Pemohon_m extends CI_Model
             'c_id_warga' => (isset($post['id_warga'])) ? $post['id_warga'] : null,
             'c_npwp' => (isset($post['npwp'])) ? $post['npwp'] : null,
             'c_npwpd' => (isset($post['npwpd'])) ? $post['npwpd'] : null,
-            'c_foto_pemilik_usaha' => (isset($post['photo'])) ? $post['photo'] : null
+            'c_foto_pemilik_usaha' => (isset($post['photo'])) ? $post['photo'] : null,
+            'c_complete_reg' => $complete_reg
         ];
 
         if ($nip == null) {
@@ -73,6 +82,13 @@ class Pemohon_m extends CI_Model
         } else {
             $this->db->update('t_pemohon', $data, array('c_nip' => $nip));
         }
+
+        return $this->db->affected_rows();
+    }
+
+    public function cekRegsitration($nip)
+    {
+        return $this->db->get_where('t_pemohon', array('c_nip' => $nip))->row_array();        
     }
 
     public function findEmailPemohon($email)

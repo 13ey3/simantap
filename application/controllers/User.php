@@ -36,6 +36,8 @@ class User extends CI_Controller
             "page_title" => "User Profile",
             "content" => "user/profile",
             "custom_js" => "user/custom_js",
+            "parent_menu" => 'setting',
+            "child_menu" => 'user',
             "layout" => 1,
             "data_user" => $data_user
         ];
@@ -48,8 +50,11 @@ class User extends CI_Controller
         $post = $this->input->post();
         $post['id_jenis_identitas'] = 1;
         $post['id_warga'] = 1;
-
-        $this->pemohon_m->addOrUpdate($post, $post['nip']);
+        $status = $this->pemohon_m->addOrUpdate($post, $post['nip']);
+        
+        if ($status > 0) {
+            $this->session->set_flashdata('success', '<strong>Success!</strong> Data berhasil di perbaharui.');
+        }
 
         redirect('user/profile');
     }

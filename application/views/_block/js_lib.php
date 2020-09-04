@@ -71,14 +71,14 @@
             let active = (child_link == e.link) ? 'active' : '';
             if (e.parent_id === parent_menu.id) {
 
-              html_menu += `<a class="collapse-item ${active}" href="${e.link}">${e.nama}</a>`;
+              html_menu += `<a class="collapse-item ${active}" href="${base_url + e.link}">${e.nama}</a>`;
             }
           });
 
           html_menu += '</div></div></li>';
         } else {
           html_menu += `<li class="nav-item ${active}">
-                            <a class="nav-link" href="${parent_menu.link}">
+                            <a class="nav-link" href="${base_url + parent_menu.link}">
                                 <i class="${parent_menu.icon}"></i>
                                 <span>${parent_menu.nama}</span></a>
                         </li>`;
