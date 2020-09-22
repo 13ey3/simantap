@@ -30,7 +30,7 @@
   <?php
   } else {
   ?>
-    <div>Hallo,,,!</div>
+    <?php $this->load->view('pendaftaran/data_permohonan_lama'); ?>
   <?php
   }
   ?>

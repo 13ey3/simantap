@@ -1,5 +1,5 @@
 <div class="card mb-4">
-    <div class="card-header bg-gray-200">
+    <div class="card-header bg-info text-gray-100">
         <div class="text-center">
         <h1 class="h3">Selamat Datang di SIMANTAP</h1>
         <p class="h5">Sistem Informasi Manajemen Pelayanan Terpadu Satu Pintu</p>

@@ -8,6 +8,8 @@ class Login extends CI_Controller
   {
     parent::__construct();
     $this->load->model('user_m');
+    $this->load->model('Staffdinas_m');
+    $this->load->model('Pemohon_m');
   }
 
   public function index()
@@ -22,34 +24,54 @@ class Login extends CI_Controller
     $this->load->view('portal', $view_data);
   }
 
+  public function staff()
+  {
+    $view_data = [
+      "page_title" => "Log-in",
+      "content" => "auth/login_staff",
+      "custom_js" => "auth/custom_js",
+      "layout" => 2
+    ];
+
+    $this->load->view('portal', $view_data);
+  }
+
   public function auth()
   {
     $username = $this->input->post('username');
     $password = $this->input->post('password');
-    $user_type = $this->input->post('user_type');
 
-    if ($user_type == null) {
-      $user = $this->user_m->getUser($username)->row_array();
+    $user = $this->user_m->getUser($username)->row_array();
+    
+    
+    if ($user) {
+      $userDetile = ($user['s_jenis_user'] == 13) 
+                  ? $this->Pemohon_m->cekRegsitration($user['s_userid_detile']) 
+                  : $this->Staffdinas_m->getStaffById($user['s_userid_detile']);
 
-      if ($user) {
-        if (password_verify($password, $user['s_password'])) {
+      if (password_verify($password, $user['s_password'])) {
 
-          $name = ($user['c_id_usaha'] == 3) ? $user['c_nama_pemohon'] : $user['c_nama_badan_usaha'];
-          $user_data = [
-            'userid' => $username,
-            'name' => $name,
-            'usertype' => $user['s_jenis_user']
-          ];
-
-          $this->session->set_userdata($user_data);
-          redirect('main');
+        if ($user['s_jenis_user'] == 13) {
+          
+          $nama_pemohon = ($userDetile['c_id_usaha'] == 3) ? $userDetile['c_nama_pemohon'] : $userDetile['c_nama_badan_usaha'];
         } else {
-
-          echo "username atau password salah";
+          $nama_pemohon = '';
         }
+
+        $user_data = [
+          'userid' => $username,
+          'name' => isset($userDetile['t_nama']) ? $userDetile['t_nama'] : $nama_pemohon,
+          'usertype' => $user['s_jenis_user']
+        ];
+
+        $this->session->set_userdata($user_data);
+        redirect('main');
       } else {
-        echo "username gak ketemu";
+
+        echo "username atau password salah";
       }
+    } else {
+      echo "username gak ketemu";
     }
   }
 

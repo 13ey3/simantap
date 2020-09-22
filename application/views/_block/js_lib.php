@@ -45,7 +45,7 @@
     function menu_utama(param) {
 
       const view_menu = document.getElementById('menu_utama');
-      const parent_link = '<?= $parent_menu ?>';
+      const parent_link = '<?= isset($parent_menu) ? $parent_menu : "" ?>';
       const child_link = '<?= isset($child_menu) ? $child_menu : "" ?>';
       let html_menu = '';
       let link_menu = '';

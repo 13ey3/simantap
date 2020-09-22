@@ -25,7 +25,7 @@ class User_m extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('s_users');
-        $this->db->join('t_pemohon', 't_pemohon.c_nip = s_users.s_userid_detile', 'left');
+        // $this->db->join('t_pemohon', 't_pemohon.c_nip = s_users.s_userid_detile', 'left');
         $this->db->where('s_username', $username);
         return $this->db->get();
     }

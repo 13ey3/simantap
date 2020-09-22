@@ -56,7 +56,7 @@ if ($layout == 1) {
 } elseif ($layout == 2) {
   ?>
 
-    <body class="bg-login">
+    <body class="bg-gradient-info">
       <div class="container">
         <?php $this->load->view($content); ?>
       </div>

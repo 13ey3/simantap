@@ -1,5 +1,4 @@
 <script type="text/javascript">
-    // const base_url = '<?= base_url() ?>';
     var rows = document.getElementById('rows');
     var cari = document.getElementById('cari');
 

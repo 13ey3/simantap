@@ -101,6 +101,11 @@ class Pemohon_m extends CI_Model
         return $this->db->get_where('t_pemohon', array('c_no_identitas' => $nik));
     }
 
+    public function findPemohonById($id)
+    {
+        return $this->db->get_where('t_pemohon', array('c_id_pemohon' => $id))->row_array();
+    }
+
     public function getMaxId()
     {
         $this->db->select_max('c_id_pemohon');

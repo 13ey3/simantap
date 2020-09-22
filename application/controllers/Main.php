@@ -12,7 +12,9 @@ class Main extends CI_Controller
 	public function index()
 	{
 		$this->auth->check_not_login();
-		$this->auth->is_full_register();
+		if ($this->session->userdata('usertype') == 13) {
+			$this->auth->is_full_register();
+		}
 
 		$view_data = [
 			"page_title" => "Dashboard",

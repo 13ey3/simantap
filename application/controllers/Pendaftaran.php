@@ -14,11 +14,13 @@ class Pendaftaran extends CI_Controller
 
   public function index()
   {
+    $user = $this->session->userdata('usertype');
     $view_data = [
       "page_title" => "Pendaftaran",
       "content" => "pendaftaran/index",
-      "custom_js" => "pendaftaran/custom_js",
+      "custom_js" => ($user == 13) ? "pendaftaran/pemohon_custom_js" : "pendaftaran/custom_js",
       "parent_menu" => 'pendaftaran',
+      "usertype" => $user,
       "layout" => 1
     ];
 

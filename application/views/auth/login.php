@@ -2,10 +2,10 @@
 $form_attr = array('class' => 'user', 'id' => 'login_form');
 ?>
 <!-- Login page -->
-<div class="row justify-content-center">
+<div class="row justify-content-center my-5 my-md-2 my-lg-5">
 
-  <div class="col-xl-6 col-lg-5 col-md-6 col-sm-10">
-    <div class="card-taransparant my-6">
+  <div class="col-md-8 col-sm-10 col-lg-6">
+    <div class="card-taransparant bg-card-login my-5 my-md-3 my-sm-1 my-lg-5 shadow-sm">
       <div class="card-body">
         <div class="row">
           <div class="col-1">
@@ -30,9 +30,9 @@ $form_attr = array('class' => 'user', 'id' => 'login_form');
     </div>
   </div>
 
-  <div class="col-xl-6 col-lg-5 col-md-6 col-sm-10">
-    <div class="col-md-12 px-5">
-      <div class="card border-0 shadow-lg my-6">
+  <div class="col-md-8 col-sm-10 col-lg-6">
+    <div class="col-md-12">
+      <div class="card border-0 shadow my-5 my-md-3 my-sm-1 my-lg-5">
         <div class="card-body px-5">
           <div class="text-center">
             <h1 class="h4 text-gray-900 mb-4">Login ke SIMANTAP</h1>
