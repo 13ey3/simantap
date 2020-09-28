@@ -7,6 +7,7 @@ class Pendaftaran extends CI_Controller
   public function __construct()
   {
     parent::__construct();
+    $this->load->model('master_kelengkapan_dokumen_m');
     $this->load->model('permohonan_lama_m');
     $this->load->model('permohonan_m');
     $this->load->model('pemohon_m');
@@ -157,15 +158,28 @@ class Pendaftaran extends CI_Controller
 
   public function tambah()
   {
-    $post = $this->input->post();
-
     $view_data = [
       "page_title" => "Tambah Permohonan",
       "content" => "pendaftaran/tambah",
-      "custom_js" => "pendaftaran/custom_js",
+      "custom_js" => "pendaftaran/tambah_js",
       "layout" => 1
     ];
 
     $this->load->view('main', $view_data);
+  }
+
+  public function simpan()
+  {
+    $post = $this->input->post();
+
+    var_dump($post); die;
+  }
+
+  public function kelengkapan_dokumen_ajax()
+  {
+    $post = $this->input->post();
+    $output = $this->master_kelengkapan_dokumen_m->getKelengkapanDokumenByJenisIIjin($post['id_jenis_ijin']);
+    
+    echo json_encode($output);
   }
 }

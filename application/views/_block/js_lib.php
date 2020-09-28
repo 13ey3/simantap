@@ -31,6 +31,7 @@
     }
 
     ready(function() {
+      console.log('some icon from https://www.flaticon.com/authors/vitaly-gorbachev');
       menus();
     });
 

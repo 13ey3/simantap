@@ -5,7 +5,7 @@
                 <h6 class="m-0 font-weight-bold text-primary">Data <?= $page_title ?></h6>
             </div>
             <div class="col-sm-6">
-                <button class="btn btn-sm btn-primary float-right" onclick="pilihJenisIjin()">Tambah</button>
+                <a href="pendaftaran/tambah" class="btn btn-sm btn-primary float-right">Tambah</a>
             </div>
         </div>
     </div>

@@ -88,7 +88,19 @@ class Pemohon_m extends CI_Model
 
     public function cekRegsitration($nip)
     {
-        return $this->db->get_where('t_pemohon', array('c_nip' => $nip))->row_array();        
+        return $this->db->get_where('t_pemohon', array('c_nip' => $nip))->row_array();
+    }
+
+    public function getDetilePemohonByNip($nip)
+    {
+        $query = $this->db->select('a.*, b.deskripsi as nama_kecamatan, c.deskripsi as nama_kelurahan, d.deskripsi as jenis_usaha')
+            ->from('t_pemohon a')
+            ->join('kecamatan b', 'b.id_kecamatan = a.c_id_kecamatan_pemohon', 'left')
+            ->join('kelurahan c', 'c.id_kelurahan = a.c_id_kelurahan_pemohon', 'left')
+            ->join('jenis_usaha d', 'd.id_usaha = a.c_id_usaha', 'left')
+            ->where('c_nip', $nip);
+
+        return $query->get()->row_array();
     }
 
     public function findEmailPemohon($email)

@@ -10,22 +10,115 @@
         </div>
       </div>
     </div>
-    <div class="card-body">
-      <form action="" method="POST">
 
-        <div class="form-group row">
-          <label class="col-sm-2 col-form-label">No. Induk Perizinan</label>
+    <div class="card-body">
+      <form action="simpan" method="POST">
+        <div class="h6">Data Pemohon</div>
+        <hr style="margin-top: .2rem; margin-bottom: 1rem;">
+
+        <div class="form-group row px-2">
+          <label class="col-sm-2 col-form-label-sm">No. Induk Perizinan</label>
           <div class="col-sm-3">
-            <input type="text" class="form-control form-control-sm" name="nip" id="nip">
+            <input type="text" class="form-control form-control-sm" name="nip" id="nip" onblur="getDataPemohon()">
+          </div>
+
+          <label class="col-sm-2 col-form-label-sm">NIK</label>
+          <div class="col-sm-3">
+            <input type="text" class="form-control form-control-sm" name="nik" id="nik">
           </div>
         </div>
 
-        <div class="form-group row">
-          <label class="col-sm-2 col-form-label">No. Surat Permohonan</label>
+        <div class="form-group row px-2">
+          <label class="col-sm-2 col-form-label-sm">Nama Pemohon</label>
+          <div class="col-sm-3">
+            <input type="text" class="form-control form-control-sm" name="nama_pemohon" id="nama_pemohon">
+          </div>
+
+          <label class="col-sm-2 col-form-label-sm">Jenis Usaha</label>
+          <div class="col-sm-3">
+            <input type="text" class="form-control form-control-sm" name="jenis_usaha" id="jenis_usaha">
+          </div>
+        </div>
+
+        <div class="form-group row px-2">
+          <label class="col-sm-2 col-form-label-sm">Kecamatan</label>
+          <div class="col-sm-3">
+            <input type="text" class="form-control form-control-sm" name="kecamatan" id="kecamatan">
+          </div>
+
+          <label class="col-sm-2 col-form-label-sm">Kelurahan</label>
+          <div class="col-sm-3">
+            <input type="text" class="form-control form-control-sm" name="kelurahan" id="kelurahan">
+          </div>
+        </div>
+
+        <div class="form-group row px-2">
+          <label class="col-sm-2 col-form-label-sm">Kab./Kota</label>
+          <div class="col-sm-3">
+            <input type="text" class="form-control form-control-sm" name="kab_kot_pemohon" id="kab_kot_pemohon">
+          </div>
+
+          <label class="col-sm-2 col-form-label-sm">Alamat</label>
+          <div class="col-sm-3">
+            <textarea class="form-control" name="alamat_pemohon" id="alamat_pemohon" rows="3"></textarea>
+          </div>
+        </div>
+
+        <div class="h6">Data Permohonan</div>
+        <hr style="margin-top: .2rem; margin-bottom: 1rem;">
+
+        <div class="form-group row px-2">
+          <label class="col-sm-2 col-form-label-sm">Jenis Ijin</label>
+          <div class="col-sm-3">
+            <select name="id_jenis_ijin" id="id_jenis_ijin" class="form-control form-control-sm" onchange="getKelengkapanDokumen(this)">
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group row px-2">
+          <label class="col-sm-2 col-form-label-sm">No. Surat Permohonan</label>
           <div class="col-sm-3">
             <input type="text" class="form-control form-control-sm" name="no_surat_permohonan" id="no_surat_permohonan">
           </div>
+
+          <label class="col-sm-2 col-form-label-sm">Tanggal Permohonan</label>
+          <div class="col-sm-3">
+            <input type="text" class="form-control form-control-sm" name="tgl_permohonan" id="tgl_permohonan">
+          </div>
         </div>
+
+        <div class="form-group row px-2">
+          <label class="col-sm-2 col-form-label-sm">Kecamaatan</label>
+          <div class="col-sm-3">
+            <select name="kec_usaha" id="kec_usaha" class="form-control form-control-sm" onchange="getKelurahanAjax(this)">
+            </select>
+          </div>
+
+          <label class="col-sm-2 col-form-label-sm">Kelurahan</label>
+          <div class="col-sm-3">
+            <select name="kel_usaha" id="kel_usaha" class="form-control form-control-sm" onchange="">
+              <option value="">Pilih</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group row px-2">
+          <label class="col-sm-2 col-form-label-sm">Alamat Usaha</label>
+          <div class="col-sm-3">
+            <textarea class="form-control" name="alamat_usaha" id="alamat_usaha" rows="3"></textarea>
+          </div>
+
+        </div>
+
+        <div class="form-group row px-2">
+          <label class="col-sm-2 col-form-label-sm">Kelengkapan Dokumen</label>
+          <div class="col-sm-8">
+            <div id="kelengkapan_dokumen"></div>
+          </div>
+
+        </div>
+
+        <button class="btn btn-primary btn-sm" type="submit">Simpan</button>
 
       </form>
     </div>
