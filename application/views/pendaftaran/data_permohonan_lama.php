@@ -28,7 +28,7 @@
         </div>
 
         <div class="table-responsive">
-            <table class="table table-hover table-sm" id="pemohon_data_grid">
+            <table class="table table-hover table-sm" id="permohonan_lama">
                 <thead>
                     <tr class="bg-info text-white">
                         <th>ID Register</th>

@@ -46,7 +46,16 @@
                     <tr class="bg-info">
                         <td></td>
                         <td></td>
-                        <td id="jenis_usaha"></td>
+                        <td id="jenis_usaha">
+                            <select id="comboJenisUsaha" class="form-control form-control-sm" onchange="">
+                                <option value="">Pilih</option>
+                                <option value="1">Koperasi</option>
+                                <option value="2">Perusahaan</option>
+                                <option value="3">Perseorangan</option>
+                                <option value="4">UD</option>
+                                <option value="5">Firma</option>
+                            </select>
+                        </td>
                         <td></td>
                     </tr>
                 </tfoot>

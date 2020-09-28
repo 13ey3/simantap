@@ -29,9 +29,7 @@
     </div>
   <?php
   } else {
-  ?>
-    <?php $this->load->view('pendaftaran/data_permohonan_lama'); ?>
-  <?php
+    $this->load->view('pendaftaran/permohonan');
   }
   ?>
 

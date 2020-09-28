@@ -10,12 +10,14 @@
       <div class="card border-1 shadow mt-1">
         <div class="card-body px-5">
           <div class="text-center">
-            <h1 class="h4 text-gray-900 mb-4">Login ke SIMANTAP</h1>
+            <h1 class="h4 text-gray-900 mb-4">Login 
+              <span class="font-weight-bold">SIMANTAP</span>
+            </h1>
           </div>
           <form class="user" action="auth" method="POST">
             <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
             <div class="form-group">
-              <label class="form-label">Masuk username/NIP</label>
+              <label class="form-label">Username</label>
               <input type="text" class="form-control form-control-user" id="username" name="username" aria-describedby="emailHelp">
             </div>
             <div class="form-group">

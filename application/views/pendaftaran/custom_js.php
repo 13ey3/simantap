@@ -55,7 +55,7 @@
                 cari = $("#kolomCariPemohon").val();
             }
         } else if (tab_active === "data-permohonan") {
-            url = base_url + 'pendaftaran/pemohon_ajax/';
+            url = base_url + 'pendaftaran/permohonan_ajax/';
 
             if ($("#kolomCariPermohona").val().length == 0) {
                 cari = null;
@@ -116,7 +116,7 @@
                 $('#data-permohonan #total_halaman').html(": " + aa.total_halaman);
 
             } else if (data.tab_active === "data-lama") {
-                $('#data_grid_permohonan_lama tbody').html(body_table);
+                $('#permohonan_lama tbody').html(body_table);
                 $('#data-lama #pagination').html(aa.pagination);
                 $('#data-lama #rows').val(aa.rows);
                 $('#data-lama #page').val(aa.page);
