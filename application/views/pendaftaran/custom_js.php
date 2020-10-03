@@ -2,6 +2,7 @@
     $(function() {
         calldatagrid(0);
         jenisIjin();
+        setActiveTab();
     });
 
     let csrfHash = '<?= $this->security->get_csrf_hash(); ?>';
@@ -17,6 +18,22 @@
         var pageno = $(this).attr('data-ci-pagination-page');
         calldatagrid(pageno);
     });
+
+    function setActiveTab() {
+        const tabActiveted = '<?= $this->session->flashdata('tab_active'); ?>';
+
+        if (tabActiveted == 1) {
+            $('#tab-pemohon').removeClass('active');
+            $('#data-pemohon').removeClass('active').removeClass('show');
+
+            $('#tab-permohonan').addClass('active');
+            $('#data-permohonan').addClass('active').addClass('show');
+
+            setTimeout(() => {
+                calldatagrid(0);
+            }, 200)
+        }
+    }
 
     function jenisIjin() {
         $.get(base_url + 'jenis_ijin/getJenisIjin', function(data) {
@@ -108,7 +125,7 @@
                 $('#data-pemohon #total_halaman').html(": " + aa.total_halaman);
 
             } else if (data.tab_active === "data-permohonan") {
-                $('#data_grid_pemohon tbody').html(body_table);
+                $('#data_grid_permohonan tbody').html(body_table);
                 $('#data-permohonan #pagination').html(aa.pagination);
                 $('#data-permohonan #rows').val(aa.rows);
                 $('#data-permohonan #page').val(aa.page);

@@ -85,7 +85,8 @@
                         </li>`;
         }
       }
-
-      view_menu.innerHTML = html_menu;
+      
+      if (view_menu !== null)
+        view_menu.innerHTML = html_menu;
     }
   </script>

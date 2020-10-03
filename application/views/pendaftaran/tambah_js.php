@@ -76,13 +76,13 @@
                                 ? res.c_nama_pemohon 
                                 : res.c_nama_badan_usaha;
 
-            $('#nik').val(res.c_no_identitas).prop("disabled", true);
-            $('#nama_pemohon').val(nama_pemohon).prop("disabled", true);
-            $('#jenis_usaha').val(res.jenis_usaha).prop("disabled", true);
-            $('#kecamatan').val(res.nama_kecamatan).prop("disabled", true);
-            $('#kelurahan').val(res.nama_kelurahan).prop("disabled", true);
-            $('#kab_kot_pemohon').val(res.c_kota).prop("disabled", true);
-            $('#alamat_pemohon').val(res.c_alamat_pemohon).prop("disabled", true);
+            $('#nik').val(res.c_no_identitas).prop("readonly", true);
+            $('#nama_pemohon').val(nama_pemohon).prop("readonly", true);
+            $('#jenis_usaha').val(res.jenis_usaha).prop("readonly", true);
+            $('#kecamatan').val(res.nama_kecamatan).prop("readonly", true);
+            $('#kelurahan').val(res.nama_kelurahan).prop("readonly", true);
+            $('#kab_kot_pemohon').val(res.c_kota).prop("readonly", true);
+            $('#alamat_pemohon').val(res.c_alamat_pemohon).prop("readonly", true);
         });
     }
 

@@ -57,4 +57,11 @@ class Permohonan_m extends CI_Model
 
     return $result[0]['allcount'];
   }
+
+  public function createOrUpdate($data)
+  {
+    // var_dump($data); die;
+    $this->db->set('c_tgl_create', 'now()', FALSE);
+		$this->db->insert('t_permohonan', $data);
+  }
 }

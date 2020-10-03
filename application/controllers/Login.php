@@ -21,7 +21,7 @@ class Login extends CI_Controller
       "layout" => 2
     ];
 
-    $this->load->view('portal', $view_data);
+    $this->load->view('main', $view_data);
   }
 
   public function staff()
@@ -33,7 +33,7 @@ class Login extends CI_Controller
       "layout" => 2
     ];
 
-    $this->load->view('portal', $view_data);
+    $this->load->view('main', $view_data);
   }
 
   public function auth()

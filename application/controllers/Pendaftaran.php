@@ -8,6 +8,8 @@ class Pendaftaran extends CI_Controller
   {
     parent::__construct();
     $this->load->model('master_kelengkapan_dokumen_m');
+    $this->load->model('kelengkapan_dokumen_m');
+    $this->load->model('counter_register_m');
     $this->load->model('permohonan_lama_m');
     $this->load->model('permohonan_m');
     $this->load->model('pemohon_m');
@@ -171,15 +173,71 @@ class Pendaftaran extends CI_Controller
   public function simpan()
   {
     $post = $this->input->post();
+    $session = $this->session->userdata();
+    $master_dokumen = $this->master_kelengkapan_dokumen_m->getKelengkapanDokumenByJenisIIjin($post['id_jenis_ijin']);
 
-    var_dump($post); die;
+    $data = [
+      'c_id_register' => $this->create_id_register(),
+      'c_nip' => $post['nip'],
+      'c_no_surat_permohonan' => $post['no_surat_permohonan'],
+      'c_tgl_permohonan' => $post['tgl_permohonan'],
+      'c_status' => 'Baru',
+      'c_id_jenis_ijin' => $post['id_jenis_ijin'],
+      'c_id_user' => $session['userid'],
+      'c_alamat_usaha' => $post['alamat_usaha'],
+      'c_id_kelurahan_usaha' => $post['kel_usaha'],
+      'c_id_kecamatan_usaha' => $post['kec_usaha'],
+      'c_aktif' => 'Y',
+      'c_id_user' => $session['userid']
+    ];
+
+    if (is_array($post['kelengkapan_dokumen'])) {
+      foreach ($post['kelengkapan_dokumen'] as $key => $val) {
+          $data_kelengkapan[$key] = $val;
+      }
+    } else {
+      $data_kelengkapan = array();
+    }
+    $this->kelengkapan_dokumen_m->createOrUpdate($data, $data_kelengkapan, $master_dokumen);
+    // var_dump($data_kelengkapan); die;
+    
+    $data_tahap['id_tahap'] = 1;
+    $this->tahap_permohonan_m->insert_tahap($data, $data_tahap);
+    $this->permohonan_m->createOrUpdate($data);
+
+    $this->session->set_flashdata('tab_active', "1");
+
+    redirect('pendaftaran');
+  }
+
+  public function create_id_register()
+  {
+    $tahun = Date('Y');
+    $bulan = Date('m');
+    $today = Date('Y-m-d H:i:s');
+    $counter_nomor = $this->counter_register_m->getIdRegister($bulan, $tahun);
+    $session = $this->session->userdata();
+    
+    if ($counter_nomor->num_rows() == 0) {
+      $nomor = 1;
+
+      $this->counter_register_m->createOrUpdate($nomor, $session, $today, $bulan, $tahun);
+    } else {
+      $row = $counter_nomor->row();
+      $nomor = abs($row->counter_nomor) + 1;
+      // var_dump($row); die;
+      $this->counter_register_m->createOrUpdate($nomor, $session, $today, $bulan, $tahun, $row->counter_id);
+    }
+
+    $nomor_real = '0000';
+    return $tahun . $bulan . substr_replace($nomor_real, $nomor, 4 - strlen($nomor), 4);
   }
 
   public function kelengkapan_dokumen_ajax()
   {
     $post = $this->input->post();
     $output = $this->master_kelengkapan_dokumen_m->getKelengkapanDokumenByJenisIIjin($post['id_jenis_ijin']);
-    
+
     echo json_encode($output);
   }
 }

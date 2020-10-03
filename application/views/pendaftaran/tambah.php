@@ -17,6 +17,7 @@
         <hr style="margin-top: .2rem; margin-bottom: 1rem;">
 
         <div class="form-group row px-2">
+          <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
           <label class="col-sm-2 col-form-label-sm">No. Induk Perizinan</label>
           <div class="col-sm-3">
             <input type="text" class="form-control form-control-sm" name="nip" id="nip" onblur="getDataPemohon()">
