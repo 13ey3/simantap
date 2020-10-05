@@ -112,33 +112,40 @@
             jenisPermohonan: data.jenisPermohonan,
             <?= $this->security->get_csrf_token_name(); ?>: csrfHash
         }, (res) => {
-            // console.log(data);
             var aa = JSON.parse(res)
             var body_table = (aa.body_table === "") ? '<tr><td colspan="5" class="text-center">Tidak ditemukan data!</td></tr>"' : aa.body_table;
 
+            $("#loading").fadeOut(3000);
+
             if (data.tab_active === "data-pemohon") {
-                $('#data_grid_pemohon tbody').html(body_table);
-                $('#data-pemohon #pagination').html(aa.pagination);
-                $('#data-pemohon #rows').val(aa.rows);
-                $('#data-pemohon #page').val(aa.page);
-                $('#data-pemohon #total_data').html(aa.info);
-                $('#data-pemohon #total_halaman').html(": " + aa.total_halaman);
+                setTimeout(() => {
+                    $('#data_grid_pemohon tbody').html(body_table);
+                    $('#data-pemohon #total_halaman').html(": " + aa.total_halaman);
+                    $('#data-pemohon #pagination').html(aa.pagination);
+                    $('#data-pemohon #page').val(aa.page);
+                    $('#data-pemohon #rows').val(aa.rows);
+                    $('#data-pemohon #total_data').html(aa.info);
+                }, 200);
 
             } else if (data.tab_active === "data-permohonan") {
-                $('#data_grid_permohonan tbody').html(body_table);
-                $('#data-permohonan #pagination').html(aa.pagination);
-                $('#data-permohonan #rows').val(aa.rows);
-                $('#data-permohonan #page').val(aa.page);
-                $('#data-permohonan #total_data').html(aa.info);
-                $('#data-permohonan #total_halaman').html(": " + aa.total_halaman);
+                setTimeout(() => {
+                    $('#data_grid_permohonan tbody').html(body_table);
+                    $('#data-permohonan #pagination').html(aa.pagination);
+                    $('#data-permohonan #rows').val(aa.rows);
+                    $('#data-permohonan #page').val(aa.page);
+                    $('#data-permohonan #total_data').html(aa.info);
+                    $('#data-permohonan #total_halaman').html(": " + aa.total_halaman);
+                }, 200);
 
             } else if (data.tab_active === "data-lama") {
-                $('#permohonan_lama tbody').html(body_table);
-                $('#data-lama #pagination').html(aa.pagination);
-                $('#data-lama #rows').val(aa.rows);
-                $('#data-lama #page').val(aa.page);
-                $('#data-lama #total_data').html(aa.info);
-                $('#data-lama #total_halaman').html(": " + aa.total_halaman);
+                setTimeout(() => {
+                    $('#permohonan_lama tbody').html(body_table);
+                    $('#data-lama #pagination').html(aa.pagination);
+                    $('#data-lama #rows').val(aa.rows);
+                    $('#data-lama #page').val(aa.page);
+                    $('#data-lama #total_data').html(aa.info);
+                    $('#data-lama #total_halaman').html(": " + aa.total_halaman);
+                }, 200);
             }
         });
     }

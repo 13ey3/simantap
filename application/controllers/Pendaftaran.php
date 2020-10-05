@@ -86,7 +86,7 @@ class Pendaftaran extends CI_Controller
     }
 
     $count = $this->permohonan_m->countAllData($cari, $jenisIjin, $jenisPermohonan);
-    $result = $this->permohonan_m->getAllPerijinan($limit, $page, $cari, $jenisIjin, $jenisPermohonan);
+    $result = $this->permohonan_m->get_antrian_ap($limit, $page, $cari, $jenisIjin, $jenisPermohonan);
 
     $paging_data = [
       'count' => $count,
@@ -97,13 +97,13 @@ class Pendaftaran extends CI_Controller
     $tr = "";
     foreach ($result as $val) {
       $tombol = "<a href=" . $val['c_id_register'] . ">Edit</a> | <a href=" . $val['c_id_register'] . ">Detile</a> | <a href=" . $val['c_id_register'] . ">Delete</a>";
-      $tr .= "<tr>";
-      $tr .= "<td>" . $val['c_id_register'] . "</td>";
-      $tr .= "<td>" . $val['c_status_permohonan'] . "</td>";
-      $tr .= "<td>" . $val['c_nama_pemohon'] . "</td>";
-      $tr .= "<td>" . $val['deskripsi'] . "</td>";
-      $tr .= "<td><center>" . $tombol . "</center></td>";
-      $tr .= "</tr>";
+      // $tr .= "<tr>";
+      // $tr .= "<td>" . $val['c_id_register'] . "</td>";
+      // $tr .= "<td>" . $val['c_status_permohonan'] . "</td>";
+      // $tr .= "<td>" . $val['c_nama_pemohon'] . "</td>";
+      // $tr .= "<td>" . $val['deskripsi'] . "</td>";
+      // $tr .= "<td><center>" . $tombol . "</center></td>";
+      // $tr .= "</tr>";
     }
 
     $data['pagination'] = paging($paging_data);
@@ -164,6 +164,7 @@ class Pendaftaran extends CI_Controller
       "page_title" => "Tambah Permohonan",
       "content" => "pendaftaran/tambah",
       "custom_js" => "pendaftaran/tambah_js",
+      "parent_menu" => 'pendaftaran',
       "layout" => 1
     ];
 
@@ -175,12 +176,12 @@ class Pendaftaran extends CI_Controller
     $post = $this->input->post();
     $session = $this->session->userdata();
     $master_dokumen = $this->master_kelengkapan_dokumen_m->getKelengkapanDokumenByJenisIIjin($post['id_jenis_ijin']);
-
+    // var_dump($post); die; 
     $data = [
       'c_id_register' => $this->create_id_register(),
       'c_nip' => $post['nip'],
       'c_no_surat_permohonan' => $post['no_surat_permohonan'],
-      'c_tgl_permohonan' => $post['tgl_permohonan'],
+      'c_tgl_permohonan' => date('Y-m-d', strtotime($post['tgl_permohonan'])),
       'c_status' => 'Baru',
       'c_id_jenis_ijin' => $post['id_jenis_ijin'],
       'c_id_user' => $session['userid'],
@@ -199,12 +200,11 @@ class Pendaftaran extends CI_Controller
       $data_kelengkapan = array();
     }
     $this->kelengkapan_dokumen_m->createOrUpdate($data, $data_kelengkapan, $master_dokumen);
-    // var_dump($data_kelengkapan); die;
-    
+        
     $data_tahap['id_tahap'] = 1;
     $this->tahap_permohonan_m->insert_tahap($data, $data_tahap);
     $this->permohonan_m->createOrUpdate($data);
-
+    // set param agar load tab permohonan
     $this->session->set_flashdata('tab_active', "1");
 
     redirect('pendaftaran');
