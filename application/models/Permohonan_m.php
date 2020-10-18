@@ -58,23 +58,40 @@ class Permohonan_m extends CI_Model
     return $result[0]['allcount'];
   }
 
-  public function get_antrian_ap($rows, $pages, $cari, $jenis_ijin, $jenis_permohonan)
+  public function get_antrian_ap($rows, $pages, $cari, $jenis_ijin)
   {
-    $this->db->select("a.`task_id`, a.`id_register`, b.`id_jenis_ijin`, c.`deskripsi` as nama_ijin, d.`lama_proses`, b.`nama_pemohon`, a.`task_state` as status, b.`alamat`, DATE_FORMAT(b.`tgl_create`, '%d-%m-%Y %H:%i:%s') as tgl_mulai, DATE_FORMAT(DATE_ADD(b.`tgl_create`, INTERVAL d.`lama_proses` DAY_HOUR), '%d-%m-%Y %H:%i:%s') as target, DATEDIFF(CURDATE(),DATE_ADD(b.`tgl_create`, INTERVAL d.`lama_proses` DAY_HOUR)) as kondisi");
+    $this->db->select("a.`task_id`, a.`id_register`, b.`c_id_jenis_ijin`, c.`deskripsi` as nama_ijin, d.`lama_proses`, e.`c_nama_pemohon`, a.`task_state` as status, DATE_FORMAT(b.`c_tgl_create`, '%d-%m-%Y %H:%i:%s') as tgl_mulai, DATE_FORMAT(DATE_ADD(b.`c_tgl_create`, INTERVAL d.`lama_proses` DAY_HOUR), '%d-%m-%Y %H:%i:%s') as target, DATEDIFF(CURDATE(),DATE_ADD(b.`c_tgl_create`, INTERVAL d.`lama_proses` DAY_HOUR)) as kondisi");
     $this->db->from('simantap_task a');
-    $this->db->join('t_permohonan b', 'b.c_idregister = a.id_register', 'right');
+    $this->db->join('t_permohonan b', 'b.c_id_register = a.id_register', 'right');
     $this->db->join('jenis_perijinan c', 'b.c_id_jenis_ijin = c.id_jenis_ijin', 'left');
     $this->db->join('simantap_workflow d', 'a.workflow_id = d.workflow_id', 'left');
-    $this->db->where('a.task_status', FALSE);
-    $this->db->where('a.task_start', 2);
+    $this->db->join('t_pemohon e', 'e.c_nip = b.c_nip', 'left');
+    $this->db->where('a.task_status', TRUE);
+    $this->db->where('a.task_start', 1);
     $this->db->limit($rows, $pages);
     $this->db->order_by('b.c_tgl_create', 'DESC');
-    return $this->db->get()->result_array();
+    $query = $this->db->get();
+
+    return $query->result_array();
+  }
+
+  public function count_antrian_ap($cari, $jenis_ijin)
+  {
+    $this->db->select("count(c_id_register) as allcount");
+    $this->db->from('simantap_task a');
+    $this->db->join('t_permohonan b', 'b.c_id_register = a.id_register', 'right');
+    $this->db->join('jenis_perijinan c', 'b.c_id_jenis_ijin = c.id_jenis_ijin', 'left');
+    $this->db->join('simantap_workflow d', 'a.workflow_id = d.workflow_id', 'left');
+    $this->db->join('t_pemohon e', 'e.c_nip = b.c_nip', 'left');
+    $this->db->where('a.task_status', TRUE);
+    $this->db->where('a.task_start', 1);
+    $query = $this->db->get()->result_array();
+
+    return $query[0]['allcount'];
   }
 
   public function createOrUpdate($data)
   {
-    // var_dump($data); die;
     $this->db->set('c_tgl_create', 'now()', FALSE);
     $this->db->insert('t_permohonan', $data);
   }

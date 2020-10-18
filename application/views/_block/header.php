@@ -16,7 +16,7 @@
 	<!-- Custom styles for this template -->
 	<link href="<?= base_url() ?>publik/css/sb-admin-2.css" rel="stylesheet">
 	<link href="<?= base_url() ?>publik/vendor/loading/_css/Icomoon/style.css" rel="stylesheet" type="text/css" />
-	
+
 
 	<!-- Custom styles for this page -->
 	<link href="<?= base_url() ?>publik/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
@@ -26,5 +26,7 @@
 			padding-left: 5px;
 			font-size: 12px;
 			font-style: italic;
+			display: none;
 		}
+
 	</style>

@@ -14,7 +14,7 @@
     <div class="card-body">
       <form action="simpan" method="POST" name="tambah-permohonan" onsubmit="return validasiForm()">
         <div class="h6">Data Pemohon</div>
-        <hr style="margin-top: .2rem; margin-bottom: 1rem;">
+        <hr style="margin-top: .1rem; margin-bottom: .8rem;">
 
         <div class="form-group row px-2">
           <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
@@ -67,7 +67,7 @@
         </div>
 
         <div class="h6">Data Permohonan</div>
-        <hr style="margin-top: .2rem; margin-bottom: 1rem;">
+        <hr style="margin-top: .1rem; margin-bottom: .8rem;">
 
         <div class="form-group row px-2">
           <label class="col-sm-5  col-lg-3 col-form-label-sm">Jenis Ijin</label>
@@ -122,12 +122,19 @@
           <div class="col-sm-8">
             <div id="kelengkapan_dokumen"></div>
           </div>
-
         </div>
 
-        <button class="btn btn-primary btn-sm" type="submit">Simpan</button>
 
-      </form>
+
     </div>
+    <div class="card-footer">
+      <a href="<?= base_url() ?>" class="btn btn-secondary btn-sm">
+        <i class="fas fa-arrow-circle-left"></i> Kembali
+      </a>
+      <button class="btn btn-primary btn-sm float-right" type="submit">
+        <i class="fas fa-save"></i> Simpan
+      </button>
+    </div>
+    </form>
   </div>
 </div>

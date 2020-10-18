@@ -67,8 +67,8 @@ class Pendaftaran extends CI_Controller
     $data['body_table'] = $tr;
     $data['page'] = $page;
     $data['rows'] = $post['row'];
-    $data['info'] = "Tampil " . count($result) . " data dari " . $count . " total data";
-
+    $data['info'] = "Tampil <strong>" . count($result) . "</strong> data dari <strong>" . $count . "</strong> total data";
+    
     echo json_encode($data);
   }
 
@@ -86,7 +86,7 @@ class Pendaftaran extends CI_Controller
     }
 
     $count = $this->permohonan_m->countAllData($cari, $jenisIjin, $jenisPermohonan);
-    $result = $this->permohonan_m->get_antrian_ap($limit, $page, $cari, $jenisIjin, $jenisPermohonan);
+    $result = $this->permohonan_m->getAllPerijinan($limit, $page, $cari, $jenisIjin, $jenisPermohonan);
 
     $paging_data = [
       'count' => $count,
@@ -97,20 +97,20 @@ class Pendaftaran extends CI_Controller
     $tr = "";
     foreach ($result as $val) {
       $tombol = "<a href=" . $val['c_id_register'] . ">Edit</a> | <a href=" . $val['c_id_register'] . ">Detile</a> | <a href=" . $val['c_id_register'] . ">Delete</a>";
-      // $tr .= "<tr>";
-      // $tr .= "<td>" . $val['c_id_register'] . "</td>";
-      // $tr .= "<td>" . $val['c_status_permohonan'] . "</td>";
-      // $tr .= "<td>" . $val['c_nama_pemohon'] . "</td>";
-      // $tr .= "<td>" . $val['deskripsi'] . "</td>";
-      // $tr .= "<td><center>" . $tombol . "</center></td>";
-      // $tr .= "</tr>";
+      $tr .= "<tr>";
+      $tr .= "<td>" . $val['c_id_register'] . "</td>";
+      $tr .= "<td>" . $val['c_status_permohonan'] . "</td>";
+      $tr .= "<td>" . $val['c_nama_pemohon'] . "</td>";
+      $tr .= "<td>" . $val['deskripsi'] . "</td>";
+      $tr .= "<td><center>" . $tombol . "</center></td>";
+      $tr .= "</tr>";
     }
 
     $data['pagination'] = paging($paging_data);
     $data['body_table'] = $tr;
     $data['page'] = $page;
     $data['rows'] = $post['row'];
-    $data['info'] = "Tampil " . count($result) . " data dari " . $count . " total data";
+    $data['info'] = "Tampil <strong>" . count($result) . "</strong> data dari <strong>" . $count . "</strong> total data";
 
     echo json_encode($data);
   }
@@ -153,7 +153,7 @@ class Pendaftaran extends CI_Controller
     $data['body_table'] = $tr;
     $data['page'] = $page;
     $data['rows'] = $post['row'];
-    $data['info'] = "Tampil " . count($result) . " data dari " . $count . " total data";
+    $data['info'] = "Tampil <strong>" . count($result) . "</strong> data dari <strong>" . $count . "</strong> total data";
 
     echo json_encode($data);
   }
@@ -176,7 +176,7 @@ class Pendaftaran extends CI_Controller
     $post = $this->input->post();
     $session = $this->session->userdata();
     $master_dokumen = $this->master_kelengkapan_dokumen_m->getKelengkapanDokumenByJenisIIjin($post['id_jenis_ijin']);
-    // var_dump($post); die; 
+    
     $data = [
       'c_id_register' => $this->create_id_register(),
       'c_nip' => $post['nip'],
@@ -189,7 +189,9 @@ class Pendaftaran extends CI_Controller
       'c_id_kelurahan_usaha' => $post['kel_usaha'],
       'c_id_kecamatan_usaha' => $post['kec_usaha'],
       'c_aktif' => 'Y',
-      'c_id_user' => $session['userid']
+      'c_id_user' => $session['userid'],
+      'c_status_proses' => 'Proses',
+      'c_tgl_update_proses' => date('Y-m-d H:i:s')
     ];
 
     if (is_array($post['kelengkapan_dokumen'])) {
@@ -199,15 +201,36 @@ class Pendaftaran extends CI_Controller
     } else {
       $data_kelengkapan = array();
     }
+    // simpan task workflow
+    $this->register_to_task($data['c_id_register'], $post['id_jenis_ijin'], $session);
+    
     $this->kelengkapan_dokumen_m->createOrUpdate($data, $data_kelengkapan, $master_dokumen);
-        
+    
+    // simpan ke tabe task tahap permohonan
     $data_tahap['id_tahap'] = 1;
     $this->tahap_permohonan_m->insert_tahap($data, $data_tahap);
+
+    // simpan ke table permohonan
     $this->permohonan_m->createOrUpdate($data);
+
+
     // set param agar load tab permohonan
     $this->session->set_flashdata('tab_active', "1");
 
     redirect('pendaftaran');
+  }
+
+  public function register_to_task($id_register, $id_ijin, $session)
+  {
+    $workflow = $this->workflow_m
+        ->get_workflow($id_ijin, 1)
+        ->row();
+ 
+      $data_task['idworkflow']   = $workflow->workflow_id;
+      $data_task['idgroup']      = $workflow->id_group;
+      $data_task['idgroupinduk'] = $workflow->id_group_induk;
+
+    $this->workflow_m->insert_simatap_task($id_register, $id_ijin, $data_task, $session);
   }
 
   public function create_id_register()
@@ -225,7 +248,7 @@ class Pendaftaran extends CI_Controller
     } else {
       $row = $counter_nomor->row();
       $nomor = abs($row->counter_nomor) + 1;
-      // var_dump($row); die;
+      
       $this->counter_register_m->createOrUpdate($nomor, $session, $today, $bulan, $tahun, $row->counter_id);
     }
 

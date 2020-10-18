@@ -53,7 +53,7 @@
                     </tr>
                 </tbody>
                 <tfoot>
-                    <tr class="bg-info">
+                    <tr>
                         <td></td>
                         <td></td>
                         <td id="jenis_usaha">

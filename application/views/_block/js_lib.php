@@ -11,7 +11,7 @@
   <!-- Page level plugins -->
   <script src="<?= base_url() ?>publik/vendor/datatables/jquery.dataTables.min.js"></script>
   <script src="<?= base_url() ?>publik/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-	<!-- <script type="text/javascript" src="<?= base_url() ?>publik/vendor/loading/_scripts/main.js"></script> -->
+  <!-- <script type="text/javascript" src="<?= base_url() ?>publik/vendor/loading/_scripts/main.js"></script> -->
 
   <script>
     function ready(callbackFunc) {
@@ -34,6 +34,7 @@
     ready(function() {
       console.log('some icon from https://www.flaticon.com/authors/vitaly-gorbachev');
       menus();
+
     });
 
     function menus() {
@@ -86,8 +87,53 @@
                         </li>`;
         }
       }
-      
+
       if (view_menu !== null)
         view_menu.innerHTML = html_menu;
+    }
+
+    function form_build(param) {
+      let html = '';
+      param.forEach(ele => {
+
+        if (ele.jenis_atribut === 'T') {
+          html += generate_input(ele);
+        } else if (ele.jenis_atribut === 'A') {
+          html += generate_textarea(ele);
+        }
+      });
+
+      return html;
+    }
+
+    function generate_input(ele) {
+
+      if (ele.tipe_data === 'A') {
+        input_type = 'text';
+      } else if (ele.tipe_data === 'N') {
+        input_type = 'number';
+      } else {
+        input_type = 'date';
+      }
+
+      let input = `<div class="form-group row px-2">
+                    <label class="col-sm-5  col-lg-3 col-form-label-sm">${ ele.label }</label>
+                    <div class="col-sm-7 col-lg-3">
+                      <input type="${ input_type }" class="form-control form-control-sm" name="${ ele.nama_field }" id="${ ele.id_atribut }" >
+                    </div>
+                </div>`;
+
+      return input;
+    }
+
+    function generate_textarea(ele) {
+      let textarea = `<div class="form-group row px-2">
+                        <label class="col-sm-5  col-lg-3 col-form-label-sm">${ ele.label }</label>
+                        <div class="col-sm-7 col-lg-3">
+                          <textarea class="form-control" name="${ ele.nama_field }" id="${ ele.id_atribut }" rows="3"></textarea>
+                        </div>
+                    </div>`;
+
+      return textarea;
     }
   </script>

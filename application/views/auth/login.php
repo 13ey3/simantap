@@ -35,16 +35,17 @@ $form_attr = array('class' => 'user', 'id' => 'login_form');
       <div class="card-body px-5">
         <div class="text-center">
           <h1 class="h4 text-gray-900 mb-4">Login ke SIMANTAP</h1>
+          <span class="failed-login"><?= $this->session->flashdata('login_message'); ?></span>
         </div>
         <form class="user" action="login/auth" method="POST">
           <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
-          <div class="form-group">
+          <div class="form-group pb-3">
             <input type="text" class="form-control form-control-user" id="username" name="username" aria-describedby="emailHelp" placeholder="Masukan username">
           </div>
-          <div class="form-group">
+          <div class="form-group pb-3">
             <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Password" required>
           </div>
-          <div class="form-group pl-3">
+          <div class="form-group pl-3 bp-3">
             <div class="custom-control custom-checkbox small">
               <!-- <input type="checkbox" class="custom-control-input" name="showPassword" id="showPassword"> -->
               <!-- <label for="showPassword" class="custom-control-label">Tampil Password</label> -->
@@ -59,7 +60,7 @@ $form_attr = array('class' => 'user', 'id' => 'login_form');
         <div class="text-center">
           <a class="small" href="#">Lupa Password?</a>
         </div>
-        <div class="text-center">
+        <div class="text-center pb-3">
           <a class="small" href="<?= site_url('register') ?>">Daftar pengguna baru!</a>
         </div>
       </div>

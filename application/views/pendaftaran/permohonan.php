@@ -53,8 +53,8 @@
                         </td>
                     </tr>
                 </tbody>
-                <tfooter>
-                    <tr class="bg-info">
+                <tfoot>
+                    <tr>
                         <td></td>
                         <td id="jenis_permohonan">
                             <select id="comboJenisPermohonan" class="form-control form-control-sm" onchange="calldatagrid()">
@@ -66,12 +66,12 @@
                         </td>
                         <td></td>
                         <td id="jeni_ijin">
-                            <select id="comboJenisIjin" class="form-control form-control-sm" onchange="calldatagrid()">
+                            <select class="form-control form-control-sm comboJenisIjin" onchange="calldatagrid()">
                             </select>
                         </td>
                         <td></td>
                     </tr>
-                </tfooter>
+                </tfoot>
             </table>
 
             <!-- Paginate -->

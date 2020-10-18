@@ -36,6 +36,8 @@
     }
 
     function jenisIjin() {
+        let tab_active = $('.tab-pane.fade.active.show').attr('id');
+
         $.get(base_url + 'jenis_ijin/getJenisIjin', function(data) {
             var pars = JSON.parse(data);
             var option = '<option value="">Pilih</option>';
@@ -44,18 +46,14 @@
                 option += '<option value="' + pars[i].id_jenis_ijin + '">' + pars[i].deskripsi + '</option>';
             }
 
-            $('#data-lama #comboJenisIjin').html(option);
+            $('.comboJenisIjin').html(option);
         });
     }
 
     function calldatagrid(pageno) {
         var tab_active = $('.tab-pane.fade.active.show').attr('id');
+        var jenis_ijin = '';
 
-        if ($('#data-lama #comboJenisIjin').val() == "") {
-            jenis_ijin = null;
-        } else {
-            jenis_ijin = $('#data-lama #comboJenisIjin').val();
-        }
 
         if ($('#data-lama #comboJenisPermohonan').val() == "") {
             jenis_permohonan = null;
@@ -65,6 +63,7 @@
 
         if (tab_active === "data-pemohon") {
             url = base_url + 'pendaftaran/pemohon_ajax/';
+            rows = $("#data-pemohon #rows").val()
 
             if ($("#kolomCariPemohon").val().length == 0) {
                 cari = null;
@@ -73,24 +72,38 @@
             }
         } else if (tab_active === "data-permohonan") {
             url = base_url + 'pendaftaran/permohonan_ajax/';
+            rows = $("#data-permohonan #rows").val()
 
             if ($("#kolomCariPermohona").val().length == 0) {
                 cari = null;
             } else {
                 cari = $("#kolomCariPermohona").val();
             }
+
+            if ($('#data-permohonan .comboJenisIjin').val() == "") {
+                jenis_ijin = null;
+            } else {
+                jenis_ijin = $('#data-permohonan .comboJenisIjin').val();
+            }
         } else if (tab_active === "data-lama") {
             url = base_url + 'pendaftaran/permohonan_lama_ajax/';
+            rows = $("#data-lama #rows").val()
 
             if ($("#kolomCariPermohonanLama").val().length == 0) {
                 cari = null;
             } else {
                 cari = $("#kolomCariPermohonanLama").val();
             }
+
+            if ($('#data-lama .comboJenisIjin').val() == "") {
+                jenis_ijin = null;
+            } else {
+                jenis_ijin = $('#data-lama .comboJenisIjin').val();
+            }
         }
 
         var data = {
-            row: $("#data-lama #rows").val(),
+            row: rows,
             pageno: pageno,
             url: url,
             cari: cari,
@@ -112,6 +125,7 @@
             jenisPermohonan: data.jenisPermohonan,
             <?= $this->security->get_csrf_token_name(); ?>: csrfHash
         }, (res) => {
+            console.log(res);
             var aa = JSON.parse(res)
             var body_table = (aa.body_table === "") ? '<tr><td colspan="5" class="text-center">Tidak ditemukan data!</td></tr>"' : aa.body_table;
 
